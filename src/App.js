@@ -13,6 +13,8 @@ import './style.css';
 // reset game after win state
 // set win message
 
+const useWinEffect = (winState) => {};
+
 export default function App() {
   const [boardState, setBoardState] = useState([
     ['', '', ''],
@@ -93,26 +95,9 @@ export default function App() {
     ]);
   }, [setBoardState, setWinState]);
 
-  const getCrossClass = useCallback(() => {
-    if (winState === null) return;
-    if (winState.winType === 'horizontal' && winState.winVariant === row) {
-      return 'horizontalCross';
-    }
-
-    if (winState.winType === 'vertical' && winState.winVariant === column) {
-      return 'verticalCross';
-    }
-
-    if (winState.winType === 'diagonal') {
-      if (winState.winVariant === 0 && row === column) return 'diagonalCross1';
-
-      const position = `${row}${column}`;
-      const validPositions = ['02', '11', '20'];
-      if (winState.winVariant === 1 && validPositions.includes(position))
-        return 'diagonalCross2';
-    }
-    return '';
-  }, [winState]);
+  // would like to create a line here that I can animatea cross on  win condition
+  // const getCrossClass = useCallback(() => {
+  // }, [winState]);
 
   return (
     <div id="board" align="center">
@@ -134,7 +119,7 @@ export default function App() {
             <div
               className={`boardColumn ${
                 columnIndex !== 2 ? 'columnWithBorder' : ''
-              } ${getCrossClass(rowIndex, columnIndex)}`}
+              }`}
               onClick={() => onTurn([rowIndex, columnIndex])}
               key={columnIndex}
             >
