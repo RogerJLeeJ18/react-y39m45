@@ -13,8 +13,6 @@ import './style.css';
 // reset game after win state
 // set win message
 
-const useWinEffect = (winState) => {};
-
 export default function App() {
   const [boardState, setBoardState] = useState([
     ['', '', ''],
@@ -26,8 +24,6 @@ export default function App() {
 
   const onTurn = useCallback(
     (position) => {
-      console.log('begginning board:', boardState);
-      console.log('you clicked here: ', position);
       if (winState !== null) return;
       const row = position[0];
       const column = position[1];
@@ -37,7 +33,6 @@ export default function App() {
       setBoardState(newBoardState);
 
       setWinState(getWinState({ row, column }));
-      console.log('winState: ', winState);
       // move turn state to keep order after wins
       const newTurnState = turnState === 'O' ? 'X' : 'O';
       setTurnState(newTurnState);
@@ -59,22 +54,13 @@ export default function App() {
       const diagonal1 = `${boardState[0][0]}${boardState[1][1]}${boardState[2][2]}`;
       const diagonal2 = `${boardState[0][2]}${boardState[1][1]}${boardState[2][0]}`;
 
-      console.log('horizontalValue', horizontalValue);
-      console.log('verticalValue', verticalValue);
-      console.log('winningvalue', winningValue);
-      console.log('diagonal1Value', diagonal1);
-      console.log('diagonal2Value', diagonal2);
-
       if (horizontalValue === winningValue) {
-        console.log('hor winner');
         return { winner: turnState, winType: 'horizontally', winVariant: row };
       }
       if (verticalValue === winningValue) {
-        console.log('ver winner');
         return { winner: turnState, winType: 'vertically', winVariant: column };
       }
       if (diagonal1 === winningValue || diagonal2 === winningValue) {
-        console.log('diagonal winner');
         return {
           winner: turnState,
           winType: 'diagonally',
